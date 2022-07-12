@@ -1,0 +1,4 @@
+-Added border-turrels that don't allow to pass the map border
+-The AI of bots was upgraded
+-Added health bonus spawners
+-Bug fixed

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c429b7b79b61d46816f634f112eead, type: 3}
+  m_Name: PCBindedKeysData
+  m_EditorClassIdentifier: 
+  keysData:
+  - inputAction: {fileID: 11400000, guid: 6aafeb002edb6314fbf22949eabcfa04, type: 2}
+    keyCode: 97
+  - inputAction: {fileID: 11400000, guid: a739a992bf54c8c4195f3b7f18932ab6, type: 2}
+    keyCode: 100
+  - inputAction: {fileID: 11400000, guid: ae0d5243b222b4244b69c78d5cafdc5b, type: 2}
+    keyCode: 32
+  - inputAction: {fileID: 11400000, guid: 8fe0c806c868a7641bb449dea2b2cbf3, type: 2}
+    keyCode: 101
