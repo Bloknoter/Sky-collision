@@ -34,12 +34,6 @@ namespace Game
 
         protected TeamInfo.TeamColor winningTeam = TeamInfo.TeamColor.None;
 
-
-        void Update()
-        {
-
-        }
-
         private void OnDestroy()
         {
             Time.timeScale = 1f;    

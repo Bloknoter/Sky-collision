@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using MenuEngine;
+using SaveLoad;
 
 namespace GUI
 {
@@ -22,20 +23,23 @@ namespace GUI
         private GameObject redWinPanel;
 
         [SerializeField]
+        private GameObject newHighscore;
+
+        [SerializeField]
+        private ScoreSave scoreSave;
+
+        [SerializeField]
         private SceneLoader sceneLoader;
 
-        void Start()
+        private void Start()
         {
             winningCondition.AddListener(OnGameEnd);
             winningPanel.SetActive(false);
             blueWinPanel.SetActive(false);
             redWinPanel.SetActive(false);
             Cursor.visible = false;
-        }
 
-        void Update()
-        {
-
+            scoreSave.OnNewHighScore += OnNewHighscore;
         }
 
         private void OnGameEnd(TeamInfo.TeamColor winningTeam)
@@ -50,6 +54,11 @@ namespace GUI
             {
                 redWinPanel.SetActive(true);
             }
+        }
+
+        private void OnNewHighscore()
+        {
+            newHighscore.SetActive(true);
         }
 
         public void ToMenu()

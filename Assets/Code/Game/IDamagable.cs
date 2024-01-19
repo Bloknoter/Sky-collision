@@ -13,6 +13,6 @@ namespace Game
 
         int MaxHealth { get; }
 
-        void Damage(int value);
+        void Damage(int value, GameObject damageDealer);
     }
 }

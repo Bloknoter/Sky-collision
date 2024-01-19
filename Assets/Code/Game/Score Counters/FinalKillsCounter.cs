@@ -39,38 +39,26 @@ namespace Game.ScoreCounters
         private NumbersDisplay numbersDisplay;
 
         [SerializeField]
-        private Airplane[] blueAirplanes;
-
-        [SerializeField]
-        private Airplane[] redAirplanes;
+        private AirplanesDatabase m_airplanesDatabase;
 
         private int redAirplanesAmount;
 
         private int blueAirplanesAmount;
 
-        void Start()
+        private void Start()
         {
             fabricSpawner.AddListener(OnFabricDestroyed);
-            redAirplanesAmount = redAirplanes.Length;
-            blueAirplanesAmount = blueAirplanes.Length;
+            redAirplanesAmount = m_airplanesDatabase.RedAirplanesCount;
+            blueAirplanesAmount = m_airplanesDatabase.BlueAirplanesCount;
             numbersDisplay.SetNullNumberToBlue();
             numbersDisplay.SetNullNumberToRed();
-            for(int i = 0; i < blueAirplanes.Length;i++)
+            for(int i = 0; i < m_airplanesDatabase.AirplanesCount;i++)
             {
-                blueAirplanes[i].AddListener(OnAirplaneDestroyed);
-            }
-            for (int i = 0; i < redAirplanes.Length; i++)
-            {
-                redAirplanes[i].AddListener(OnAirplaneDestroyed);
+                m_airplanesDatabase.AirplaneAt(i).OnAirplaneDestroyed += OnAirplaneDestroyed;
             }
         }
 
-        void Update()
-        {
-
-        }
-
-        private void OnAirplaneDestroyed(Airplane airplane)
+        private void OnAirplaneDestroyed(Airplane airplane, GameObject lastDamageDealer)
         {
             if (airplane.TeamColor == TeamInfo.TeamColor.Blue)
             {

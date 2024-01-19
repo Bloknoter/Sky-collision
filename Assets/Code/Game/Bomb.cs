@@ -61,7 +61,7 @@ namespace Game
                     {
                         if (damagable.TeamColor != team)
                         {
-                            damagable.Damage(15);
+                            damagable.Damage(15, gameObject);
                         }
                     }
                 }

@@ -96,7 +96,9 @@ namespace Game
             GameObject bullet = Instantiate(BulletPrefab);
             bullet.transform.rotation = gunTransform.rotation;
             bullet.transform.position = shootPoint.position;
-            bullet.GetComponent<Bullet>().Team = team;
+            var bulletComp = bullet.GetComponent<Bullet>();
+            bulletComp.Team = team;
+            bulletComp.ShootingSource = transform;
             shootSoundSource.Play();
         }
 

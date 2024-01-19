@@ -13,23 +13,19 @@ namespace Game.ScoreCounters
         private TeamsScoreData scoreData;
 
         [SerializeField]
-        private Airplane[] allAirplanes;
+        private AirplanesDatabase airplanesDatabase;
 
-        void Start()
+        private void Start()
         {
             scoreData.BlueScore = 0;
             scoreData.RedScore = 0;
-            for(int i = 0; i < allAirplanes.Length;i++)
+            for(int i = 0; i < airplanesDatabase.AirplanesCount;i++)
             {
-                allAirplanes[i].AddListener(OnAirplaneDestroyed);
+                airplanesDatabase.AirplaneAt(i).OnAirplaneDestroyed += OnAirplaneDestroyed;
             }
         }
 
-        void Update()
-        {
-
-        }
-        private void OnAirplaneDestroyed(Airplane airplane)
+        private void OnAirplaneDestroyed(Airplane airplane, GameObject lastDamageDealer)
         {
             if (airplane.TeamColor == TeamInfo.TeamColor.Blue)
             {

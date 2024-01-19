@@ -93,7 +93,7 @@ namespace Game
             yield return new WaitForSecondsRealtime(damagingTime);
             if(targets.Count > 0)
             {
-                targets[0].gameObject.GetComponent<IDamagable>().Damage(1000);
+                targets[0].gameObject.GetComponent<IDamagable>().Damage(9999, gameObject);
                 targets.RemoveAt(0);
             }
             laserTransform.gameObject.SetActive(false);

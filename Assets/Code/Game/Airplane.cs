@@ -9,28 +9,10 @@ namespace Game
 {
     public class Airplane : MonoBehaviour, IDamagable
     {
-        #region Listeners' code
-
-        public delegate void OnAirplaneDestroyedDelegate(Airplane airplane);
-
-        private event OnAirplaneDestroyedDelegate OnAirplaneDestroyed;
-
-        public void AddListener(OnAirplaneDestroyedDelegate newdelegate)
-        {
-            OnAirplaneDestroyed += newdelegate;
-        }
-
-        public void RemoveListener(OnAirplaneDestroyedDelegate newdelegate)
-        {
-            OnAirplaneDestroyed -= newdelegate;
-        }
-
-        private void InvokeOnAirplaneDestroyed()
-        {
-            OnAirplaneDestroyed?.Invoke(this);
-        }
-
-        #endregion
+        public delegate void AirplaneWithObjectEventListener(Airplane airplane, GameObject lastDamageDealer);
+        public event AirplaneWithObjectEventListener OnDamageApplied;
+        public event AirplaneWithObjectEventListener OnAirplaneDestroyed;
+        public event AirplaneWithObjectEventListener OnBonusTaken;
 
         [SerializeField]
         private TeamInfo.TeamColor team;
@@ -63,6 +45,7 @@ namespace Game
         private AirplaneSpawner spawner;
 
         private int health;
+        private GameObject m_lastDamageDealer;
 
         public int Health
         {
@@ -83,9 +66,11 @@ namespace Game
                     smokeParticleSystem.Stop();
                     smokeParticleSystem.gameObject.SetActive(false);
                 }
+
+
                 if (health == 0)
                 {
-                    InvokeOnAirplaneDestroyed();
+                    OnAirplaneDestroyed?.Invoke(this, m_lastDamageDealer);
                     smokeParticleSystem.gameObject.SetActive(false);
                     smokeParticleSystem.Stop();
                     Instantiate(ExplosionPrefab, mytransform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
@@ -171,7 +156,7 @@ namespace Game
                 bullet.transform.rotation = shootPoint.rotation;
                 Bullet script = bullet.GetComponent<Bullet>();
                 script.Team = team;
-                script.ParentAirplane = mytransform;
+                script.ShootingSource = mytransform;
                 audioSource.Stop();
                 audioSource.clip = shootSound;
                 audioSource.Play();
@@ -180,10 +165,13 @@ namespace Game
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (Health == 0) return;
+            if (Health == 0) 
+                return;
+
             HealthBonus healthBonus = collision.gameObject.GetComponent<HealthBonus>();
             if(healthBonus != null && !healthBonus.IsUsed && Health < statsInfo.StartHealth)
             {
+                OnBonusTaken?.Invoke(this, healthBonus.gameObject);
                 Health++;
                 healthBonus.Take();
             }
@@ -201,8 +189,10 @@ namespace Game
             get { return statsInfo.StartHealth; }
         }
 
-        public void Damage(int value)
+        public void Damage(int value, GameObject damageDealer)
         {
+            m_lastDamageDealer = damageDealer;
+            OnDamageApplied?.Invoke(this, damageDealer);
             Health -= value;
         }
 

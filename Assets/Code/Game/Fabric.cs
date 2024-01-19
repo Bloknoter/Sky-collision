@@ -67,15 +67,11 @@ namespace Game
             }
         }
 
-        void Start()
+        private void Start()
         {
             health = statsInfo.MaxHealth;
         }
 
-        void Update()
-        {
-
-        }
 
         public bool available
         {
@@ -113,7 +109,7 @@ namespace Game
             get { return statsInfo.MaxHealth; }
         }
 
-        public void Damage(int value)
+        public void Damage(int value, GameObject damageDealer)
         {
             Health -= value;
         }

@@ -10,22 +10,12 @@ namespace Game
         [SerializeField]
         private Database.Game.TeamsScoreData scoreData;
 
-        void OnEnable()
+        private void OnEnable()
         {
             scoreData.RedScore = 0;
             scoreData.BlueScore = 0;
             scoreData.AddOnRedScoreChangedListener(OnRedScoreChanged);
             scoreData.AddOnBlueScoreChangedListener(OnBlueScoreChanged);
-        }
-
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-
         }
 
         private void OnRedScoreChanged(int newscore)

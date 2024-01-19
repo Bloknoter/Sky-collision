@@ -18,7 +18,7 @@ namespace Game
 
         private Transform parentAirplane;
 
-        public Transform ParentAirplane
+        public Transform ShootingSource
         {
             get { return parentAirplane; }
             set
@@ -42,19 +42,6 @@ namespace Game
             }
         }
 
-        void Start()
-        {
-
-        }
-
-        void Update()
-        {
-            /*if(mytransform.position.x > 75f || mytransform.position.x < -75f || mytransform.position.y > 75f || mytransform.position.y < -75f)
-            {
-                Destroy(gameObject);
-            }*/
-        }
-
         private void FixedUpdate()
         {
             float radAngle = (mytransform.rotation.eulerAngles.z - 90) * Mathf.Deg2Rad;
@@ -76,7 +63,7 @@ namespace Game
                 {
                     if (damagable.TeamColor != team)
                     {
-                        damagable.Damage(1);
+                        damagable.Damage(1, gameObject);
                         Destroy(gameObject);
                     }
                 }
